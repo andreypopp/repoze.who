@@ -3,7 +3,7 @@ from zope.interface import Interface
 
 class IAPIFactory(Interface):
     def __call__(environ):
-        """ environ -> IRepozeWhoAPI
+        """ environ -> IAPI
         """
 
 
@@ -24,14 +24,14 @@ class IAPI(Interface):
 
     def challenge(status='403 Forbidden', app_headers=()):
         """ -> wsgi application
-        
+
         o Return a WSGI application which represents a "challenge"
-        (request for credentials) in response to the current request.  
+        (request for credentials) in response to the current request.
         """
 
     def remember(identity=None):
         """ -> [headers]
-        
+
         O Return a sequence of response headers which suffice to remember
         the given identity.
 
@@ -40,7 +40,7 @@ class IAPI(Interface):
 
     def forget(identity=None):
         """ -> [headers]
-        
+
         O Return a sequence of response headers which suffice to destroy
         any credentials used to establish an identity.
 
@@ -49,15 +49,15 @@ class IAPI(Interface):
 
     def login(credentials, identifier_name=None):
         """ -> (identity, headers)
-        
+
         o This is an API for browser-based application login forms.
-        
+
         o If 'identifier_name' is passed, use it to look up the identifier;
           othewise, use the first configured identifier.
 
         o Attempt to authenticate 'credentials' as though the identifier
           had extracted them.
-          
+
         o On success, 'identity' will be authenticated mapping, and 'headers'
           will be "remember" headers.
 
@@ -67,9 +67,9 @@ class IAPI(Interface):
 
     def logout(identifier_name=None):
         """ -> (headers)
-        
+
         o This is an API for browser-based application logout.
-        
+
         o If 'identifier_name' is passed, use it to look up the identifier;
           othewise, use the first configured identifier.
 
@@ -205,7 +205,7 @@ class IAuthenticator(IPlugin):
 
         o 'identity' will be a dictionary (with arbitrary keys and
           values).
- 
+
         o The IAuthenticator should return a single user id (optimally
           a string) if the identity can be authenticated.  If the
           identify cannot be authenticated, the IAuthenticator should
@@ -268,7 +268,7 @@ class IMetadataProvider(IPlugin):
        providers may scribble on the identity dictionary arbitrarily.
        Return values from metadata providers are ignored.
     """
-    
+
     def add_metadata(environ, identity):
         """
         Add metadata to the identity (which is a dictionary).  One
